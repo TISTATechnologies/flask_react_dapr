@@ -1,0 +1,57 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "react-frontend"
+---
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: flaskbackend
+  namespace: "react-frontend"
+  labels:
+    app: flask-backend
+spec:
+  selector:
+    app: flask-backend
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: NodePort
+---
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaskbackend
+  namespace: "react-frontend"
+  labels:
+    app: flask-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-backend
+  template:
+    metadata:
+      labels:
+        app: flask-backend
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "flask-backend"
+        dapr.io/app-port: "5000"
+        dapr.io/log-level: "debug"
+    spec:
+      containers:
+        - name: flaskbackend
+          image: 260757724159.dkr.ecr.us-east-1.amazonaws.com/flask_backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+---
+
+# kubectl port-forward service/pythonapp 5000:5000

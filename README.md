@@ -44,6 +44,9 @@
 
 
 # APP INSTALLATION: Install react-frontend, flask-backend, Dapr
+## Create a Fargate profile
+`eksctl create fargateprofile --cluster cluster-name --region us-east-1 --name profile_name --namespace namespace_name`
+
 ## Install Dapr
 (Dapr CLI)[https://docs.dapr.io/operations/hosting/kubernetes/kubernetes-deploy/]
 1. Install Dapr: `dapr init -k -n react-frontend`

@@ -33,15 +33,13 @@ EXPOSE 8080
 
 CMD [ "node", "express.js" ]
 
-# docker build --tag react-express-docker .
-# docker run -p 8080:8080 --name react-docker_cont react-express-docker
+
+# run local code using dapr
 # dapr run --app-port 8080 --app-id react-express --app-protocol http --dapr-http-port 3500 -- node express.js
 
 
-# kubectl apply -f node.yaml
-# kubectl delete -f node.yaml
 
+# build and run docker image
+# docker build --tag react-express-docker .
+# docker run -p 8080:8080 --name react-docker_cont react-express-docker
 
-
-# minikube ip
-# minikube service --url nodeapp
